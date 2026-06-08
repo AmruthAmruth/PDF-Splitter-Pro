@@ -11,14 +11,24 @@ dotenv.config();
 const app = express();
 
 // Middlewares
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pdf-splitter-pro.vercel.app",
+  "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app",
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://pdf-splitter-pro.vercel.app",
-    "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app"
-  ],
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
+
+app.options("*", cors());
 
 // Parse JSON and URL-encoded data
 
