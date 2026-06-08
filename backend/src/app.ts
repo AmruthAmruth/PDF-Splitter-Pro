@@ -14,6 +14,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "https://pdf-splitter-pro.vercel.app",
     "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app"
   ],
   credentials: true
