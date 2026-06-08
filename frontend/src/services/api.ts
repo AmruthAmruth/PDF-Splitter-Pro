@@ -1,5 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/pdfs";
-
+const BASE_URL = import.meta.env.DEV
+  ? "http://localhost:5000/api/pdfs"
+  : "https://pdf-splitter-pro.onrender.com/api/pdfs";
 export interface PdfMetadata {
   id: string;
   fileName: string;
