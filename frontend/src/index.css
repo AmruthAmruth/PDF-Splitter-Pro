@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ============================================
+   Custom Theme Tokens (Tailwind v4 @theme)
+   ============================================ */
+@theme {
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+@layer base {
+  body {
+    background-color: theme(--color-slate-950, #020617);
+    color: theme(--color-slate-100, #f1f5f9);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgb(168 85 247 / 0.3);
+    color: rgb(233 213 255);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #020617;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}
+
+/* ============================================
+   Glassmorphism Utilities
+   ============================================ */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-glow {
+  box-shadow: 0 0 40px -10px rgba(168, 85, 247, 0.15);
+}
