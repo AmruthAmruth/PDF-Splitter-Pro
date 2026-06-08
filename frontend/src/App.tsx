@@ -88,7 +88,7 @@ function App() {
                 PDF Splitter Pro
               </h1>
               <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
-                Clean Architecture
+               Split PDFs in Seconds
               </p>
             </div>
           </div>
@@ -197,7 +197,7 @@ function App() {
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-600">
-        <p>© 2026 PDF Splitter Pro — Built with SOLID Clean Architecture Principles.</p>
+        <p>© 2026 PDF Splitter Pro — Split PDFs in Seconds.</p>
       </footer>
     </div>
   );
