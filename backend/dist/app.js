@@ -8,7 +8,14 @@ import pdfRouter from "./infrastructure/routes/pdfRoutes.js";
 dotenv.config();
 const app = express();
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://pdf-splitter-pro.vercel.app",
+    ],
+    credentials: true,
+}));
+// Parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Health Check Route
