@@ -11,15 +11,13 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://pdf-splitter-pro.vercel.app", 
-    ],
-    credentials: true,
-  })
-); 
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app"
+  ],
+  credentials: true
+}));
 
 // Parse JSON and URL-encoded data
 
@@ -29,7 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 // Health Check Route
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", message: "Server is running smoothly" });
-});
+});   
+
+
+// API Documentation Route
 
 // Root Route
 app.get("/", (req, res) => {
