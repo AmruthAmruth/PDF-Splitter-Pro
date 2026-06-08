@@ -19,7 +19,9 @@ app.use(
     ],
     credentials: true,
   })
-);
+); 
+
+// Parse JSON and URL-encoded data
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
