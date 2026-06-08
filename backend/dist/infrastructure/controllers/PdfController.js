@@ -1,6 +1,3 @@
-import { UploadPdfUseCase } from "../../application/use-cases/UploadPdfUseCase.js";
-import { GetPdfUseCase } from "../../application/use-cases/GetPdfUseCase.js";
-import { ExtractPdfUseCase } from "../../application/use-cases/ExtractPdfUseCase.js";
 import { AppError } from "../../shared/errors/AppError.js";
 import fs from "fs";
 export class PdfController {
