@@ -5,58 +5,52 @@ import { errorHandler } from "./infrastructure/middlewares/errorHandler.js";
 import { AppError } from "./shared/errors/AppError.js";
 import pdfRouter from "./infrastructure/routes/pdfRoutes.js";
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 
-// Middlewares
 const allowedOrigins = [
   "http://localhost:5173",
   "https://pdf-splitter-pro.vercel.app",
   "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app",
 ];
 
-app.use(cors({
+const corsOptions: cors.CorsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error(`Not allowed by CORS: ${origin}`));
     }
   },
   credentials: true,
-}));
+};
 
-app.options("*", cors());
-
-// Parse JSON and URL-encoded data
+app.use(cors(corsOptions));
+app.options("/*splat", cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Route
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "OK", message: "Server is running smoothly" });
-});   
-
-
-// API Documentation Route
-
-// Root Route
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Welcome to PDF Splitter Pro API" });
+  res.status(200).json({
+    status: "OK",
+    message: "Server is running smoothly",
+  });
 });
 
-// API Routes
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to PDF Splitter Pro API",
+  });
+});
+
 app.use("/api/pdfs", pdfRouter);
 
-// Fallback Route for Undefined Endpoints
 app.all("/*splat", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-// Global Error Handler Middleware
 app.use(errorHandler);
 
 export default app;
