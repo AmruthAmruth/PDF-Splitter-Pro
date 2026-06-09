@@ -15,19 +15,22 @@ const allowedOrigins = [
   "https://pdf-splitter-5vmp391ln-amruth-shyjus-projects.vercel.app",
 ];
 
-const corsOptions: cors.CorsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`Not allowed by CORS: ${origin}`));
-    }
-  },
-  credentials: true,
-};
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-app.use(cors(corsOptions));
-app.options("/*splat", cors(corsOptions));
+app.options(
+  /.*/,
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
