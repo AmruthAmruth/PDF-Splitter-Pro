@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/pdfs";
+const BASE_URL = import.meta.env.VITE_API_URL 
 export interface PdfMetadata {
   id: string;
   fileName: string;
