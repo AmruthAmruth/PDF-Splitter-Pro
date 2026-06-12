@@ -32,6 +32,7 @@ export const PDFPreviewer: React.FC<PDFPreviewerProps> = ({
           cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/cmaps/`,
           cMapPacked: true,
           standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/standard_fonts/`,
+          wasmUrl: `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/wasm/`,
         });
         const pdf = await loadingTask.promise;
         if (!active) return;
