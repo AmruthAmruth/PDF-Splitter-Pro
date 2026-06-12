@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
+import pdfjsWorkerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import { Check, Columns, Shuffle, Trash2, MoveRight, HelpCircle } from "lucide-react";
 
-// Set worker source from CDN matching installed version
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+// Set worker source to the local URL resolved by Vite
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
 
 interface PDFPreviewerProps {
   fileUrl: string;
@@ -26,7 +27,12 @@ export const PDFPreviewer: React.FC<PDFPreviewerProps> = ({
 
     const loadAndRenderPdf = async () => {
       try {
-        const loadingTask = pdfjsLib.getDocument({ url: fileUrl });
+        const loadingTask = pdfjsLib.getDocument({
+          url: fileUrl,
+          cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/cmaps/`,
+          cMapPacked: true,
+          standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/standard_fonts/`,
+        });
         const pdf = await loadingTask.promise;
         if (!active) return;
 
@@ -44,6 +50,10 @@ export const PDFPreviewer: React.FC<PDFPreviewerProps> = ({
             canvas.width = viewport.width;
 
             if (context) {
+              // Fill background with white to handle transparent PDFs correctly
+              context.fillStyle = "#ffffff";
+              context.fillRect(0, 0, canvas.width, canvas.height);
+
               await page.render({ canvasContext: context, viewport, canvas }).promise;
               const dataUrl = canvas.toDataURL("image/jpeg", 0.75);
               thumbnails[pageNum - 1] = dataUrl;
