@@ -1,10 +1,11 @@
 import type { PdfEntity } from "../../domain/entities/PdfEntity.js";
 import type { IPdfRepository } from "../../domain/repositories/IPdfRepository.js";
 import type { IPdfLibService } from "../../infrastructure/interfaces/IPdfLibService.js";
+import type { IUploadPdfUseCase } from "../interfaces/IUploadPdfUseCase.js";
 import type { PdfUploadDto } from "../dto/PdfUploadDto.js";
 import fs from "fs/promises";
 
-export class UploadPdfUseCase {
+export class UploadPdfUseCase implements IUploadPdfUseCase {
   constructor(
     private pdfRepository: IPdfRepository,
     private pdfLibService: IPdfLibService

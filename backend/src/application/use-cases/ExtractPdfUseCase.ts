@@ -1,15 +1,16 @@
 import type { IPdfRepository } from "../../domain/repositories/IPdfRepository.js";
 import type { IPdfLibService } from "../../infrastructure/interfaces/IPdfLibService.js";
+import type { IExtractPdfUseCase, ExtractPdfResult } from "../interfaces/IExtractPdfUseCase.js";
 import type { PdfExtractDto } from "../dto/PdfExtractDto.js";
 import { AppError } from "../../shared/errors/AppError.js";
 
-export class ExtractPdfUseCase {
+export class ExtractPdfUseCase implements IExtractPdfUseCase {
   constructor(
     private pdfRepository: IPdfRepository,
     private pdfLibService: IPdfLibService
   ) {}
 
-  async execute(id: string, dto: PdfExtractDto): Promise<{ buffer: Buffer; fileName: string }> {
+  async execute(id: string, dto: PdfExtractDto): Promise<ExtractPdfResult> {
     const pdf = await this.pdfRepository.findById(id);
     if (!pdf) {
       throw new AppError(`PDF with ID ${id} not found`, 404);
@@ -23,11 +24,8 @@ export class ExtractPdfUseCase {
 
     const dotIndex = pdf.fileName.lastIndexOf(".");
     const baseName = dotIndex !== -1 ? pdf.fileName.substring(0, dotIndex) : pdf.fileName;
-    const extractedFileName = `${baseName}_extracted.pdf`;
+    const fileName = `${baseName}_extracted.pdf`;
 
-    return {
-      buffer,
-      fileName: extractedFileName,
-    };
+    return { buffer, fileName };
   }
 }

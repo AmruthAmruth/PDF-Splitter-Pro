@@ -1,15 +1,16 @@
 import type { Request, Response, NextFunction } from "express";
-import { UploadPdfUseCase } from "../../application/use-cases/UploadPdfUseCase.js";
-import { GetPdfUseCase } from "../../application/use-cases/GetPdfUseCase.js";
-import { ExtractPdfUseCase } from "../../application/use-cases/ExtractPdfUseCase.js";
+import type { IUploadPdfUseCase } from "../../application/interfaces/IUploadPdfUseCase.js";
+import type { IGetPdfUseCase } from "../../application/interfaces/IGetPdfUseCase.js";
+import type { IExtractPdfUseCase } from "../../application/interfaces/IExtractPdfUseCase.js";
+import type { IPdfController } from "../interfaces/IPdfController.js";
 import { AppError } from "../../shared/errors/AppError.js";
 import fs from "fs";
 
-export class PdfController {
+export class PdfController implements IPdfController {
   constructor(
-    private uploadPdfUseCase: UploadPdfUseCase,
-    private getPdfUseCase: GetPdfUseCase,
-    private extractPdfUseCase: ExtractPdfUseCase
+    private uploadPdfUseCase: IUploadPdfUseCase,
+    private getPdfUseCase: IGetPdfUseCase,
+    private extractPdfUseCase: IExtractPdfUseCase
   ) {}
 
   upload = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

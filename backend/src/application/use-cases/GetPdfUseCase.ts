@@ -1,8 +1,9 @@
 import type { PdfEntity } from "../../domain/entities/PdfEntity.js";
 import type { IPdfRepository } from "../../domain/repositories/IPdfRepository.js";
+import type { IGetPdfUseCase } from "../interfaces/IGetPdfUseCase.js";
 import { AppError } from "../../shared/errors/AppError.js";
 
-export class GetPdfUseCase {
+export class GetPdfUseCase implements IGetPdfUseCase {
   constructor(private pdfRepository: IPdfRepository) {}
 
   async execute(id: string): Promise<PdfEntity> {
